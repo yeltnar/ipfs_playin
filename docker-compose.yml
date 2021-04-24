@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+
+  ipfs0:
+    container_name: ipfs0
+    image: ipfs/go-ipfs:latest
+    ports:
+     - "4001:4001/udp" 
+     - "4001:4001" 
+     - "5001:5001" 
+     - "8080:8080" 
+    volumes:
+      - ~/.ipfs/ipfs_data:/data/ipfs
+      - ~/.ipfs/ipfs_tmp:/ipfs_tmp
+
+  ipfs1:
+    container_name: ipfs1
+    image: ipfs/go-ipfs:latest
+    ports:
+    - "4002:4001/udp" 
+    - "4002:4001" 
+    - "5002:5001" 
+    - "8081:8080" 
+    volumes:
+    - ~/.ipfs/ipfs_data1:/data/ipfs
+    - ~/.ipfs/ipfs_tmp1:/ipfs_tmp
+      
+  get_multiaddr_from_peerid: 
+      working_dir: /app
+      depends_on: 
+        - ipfs0
+        - ipfs1
+      container_name: get_multiaddr_from_peerid
+      build: 
+        args:
+          server_to_contact: ipfs0:5001
+        context: get_multiaddr_from_peerid
+        dockerfile: Dockerfile
+      volumes: 
+        - ./get_multiaddr_from_peerid/config/docker.json:/app/config/local.json
