@@ -22,6 +22,7 @@ services:
     - "4002:4001" 
     - "5002:5001" 
     - "8081:8080" 
+    - "3001:3001" 
     volumes:
     - ~/.ipfs/ipfs_data1:/data/ipfs
     - ~/.ipfs/ipfs_tmp1:/ipfs_tmp
