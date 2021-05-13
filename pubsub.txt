@@ -1,0 +1,5 @@
+ipfs pubsub pub thisisatest 'hello this is a test'
+
+ipfs pubsub sub thisisatest
+
+curl -X POST localhost:5001/api/v0/pubsub/sub?arg=thisisatest
